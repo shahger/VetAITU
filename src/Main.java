@@ -27,7 +27,7 @@ public class Main {
                 case 4 -> viewAllPets();
                 case 5 -> demonstratePolymorphism();
                 case 6 -> viewDogsOnly();
-                case 0 -> running = false;
+                case 0 -> System.exit(0);
                 default -> System.out.println("Invalid choice!");
             }
 
