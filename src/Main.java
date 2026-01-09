@@ -8,7 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // TEST DATA
+
         pets.add(new Pet(1, "Unknown", "Dog",  2, "No owner"));
         pets.add(new Dog(2, "Rex", 4, "Aidar", "Labrador"));
         pets.add(new Cat(3, "Murka", 1, "Asel", true));
