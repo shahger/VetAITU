@@ -1,20 +1,18 @@
 public class Pet {
 
-    private int petId;
-    private String name;
-    private String species;
-    private int age;
-    private String ownerName;
-
+    protected int petId;
+    protected String name;
+    protected String species;
+    protected int age;
+    protected String ownerName;
 
     public Pet(int petId, String name, String species, int age, String ownerName) {
         this.petId = petId;
-        this.name = name;
-        this.species = species;
-        this.age = age;
-        this.ownerName = ownerName;
+        setName(name);
+        setSpecies(species);
+        setAge(age);
+        setOwnerName(ownerName);
     }
-
 
     public Pet() {
         this.petId = 0;
@@ -24,70 +22,65 @@ public class Pet {
         this.ownerName = "Unknown";
     }
 
-
-    public int getPetId() {
-        return petId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSpecies() {
-        return species;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public String getOwnerName() {
-        return ownerName;
-    }
-
-
-    public void setPetId(int petId) {
-        this.petId = petId;
-    }
+    public int getPetId() { return petId; }
+    public String getName() { return name; }
+    public String getSpecies() { return species; }
+    public int getAge() { return age; }
+    public String getOwnerName() { return ownerName; }
 
     public void setName(String name) {
-        this.name = name;
+        if (name != null && !name.trim().isEmpty()) {
+            this.name = name;
+        } else {
+            System.out.println("Name cannot be empty!");
+            this.name = "Unknown";
+        }
     }
 
     public void setSpecies(String species) {
-        this.species = species;
+        if (species != null && !species.trim().isEmpty()) {
+            this.species = species;
+        } else {
+            this.species = "Unknown";
+        }
     }
 
     public void setAge(int age) {
-        this.age = age;
+        if (age >= 0) {
+            this.age = age;
+        } else {
+            System.out.println("Age cannot be negative. Setting to 0.");
+            this.age = 0;
+        }
     }
 
     public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
+        if (ownerName != null && !ownerName.trim().isEmpty()) {
+            this.ownerName = ownerName;
+        } else {
+            this.ownerName = "Unknown";
+        }
     }
-
 
     public boolean isYoung() {
         return age < 3;
     }
 
-    public String getLifeStage() {
-        if (age < 3) {
-            return "Young";
-        } else if (age <= 8) {
-            return "Adult";
-        } else {
-            return "Senior";
-        }
+    public void makeSound() {
+        System.out.println(name + " makes a sound.");
     }
+
 
     @Override
     public String toString() {
-        return "Pet{petId=" + petId +
-                ", name='" + name + '\'' +
-                ", species='" + species + '\'' +
-                ", age=" + age +
-                ", ownerName='" + ownerName + '\'' +
-                '}';
+        return "Pet ID: " + petId +
+                ", Name: " + name +
+                ", Species: " + species +
+                ", Age: " + age +
+                ", Owner: " + ownerName;
     }
 }
+
+
+
+

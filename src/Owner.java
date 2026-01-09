@@ -5,59 +5,41 @@ public class Owner {
     private String phone;
     private int numberOfPets;
 
-
     public Owner(int ownerId, String name, String phone, int numberOfPets) {
         this.ownerId = ownerId;
-        this.name = name;
-        this.phone = phone;
-        this.numberOfPets = numberOfPets;
+        setName(name);
+        setPhone(phone);
+        setNumberOfPets(numberOfPets);
     }
 
-
-    public Owner() {
-        this.ownerId = 0;
-        this.name = "Unknown";
-        this.phone = "N/A";
-        this.numberOfPets = 0;
-    }
-
-
-    public int getOwnerId() {
-        return ownerId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public int getNumberOfPets() {
-        return numberOfPets;
-    }
-
-
-    public void setOwnerId(int ownerId) {
-        this.ownerId = ownerId;
-    }
+    public int getOwnerId() { return ownerId; }
+    public String getName() { return name; }
+    public String getPhone() { return phone; }
+    public int getNumberOfPets() { return numberOfPets; }
 
     public void setName(String name) {
-        this.name = name;
+        if (name != null && !name.trim().isEmpty()) {
+            this.name = name;
+        } else {
+            this.name = "Unknown";
+        }
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        if (phone != null && phone.contains("+")) {
+            this.phone = phone;
+        } else {
+            System.out.println("Invalid phone number!");
+            this.phone = "N/A";
+        }
     }
 
     public void setNumberOfPets(int numberOfPets) {
-        this.numberOfPets = numberOfPets;
-    }
-
-
-    public void addPet() {
-        numberOfPets++;
+        if (numberOfPets >= 0) {
+            this.numberOfPets = numberOfPets;
+        } else {
+            this.numberOfPets = 0;
+        }
     }
 
     public boolean isFrequentClient() {
@@ -66,11 +48,9 @@ public class Owner {
 
     @Override
     public String toString() {
-        return "Owner{ownerId=" + ownerId +
-                ", name='" + name + '\'' +
-                ", phone='" + phone + '\'' +
-                ", numberOfPets=" + numberOfPets +
-                '}';
+        return "Owner ID: " + ownerId +
+                ", Name: " + name +
+                ", Phone: " + phone +
+                ", Pets: " + numberOfPets;
     }
 }
-
