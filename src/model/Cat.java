@@ -1,3 +1,5 @@
+package model;
+
 public class Cat extends Pet {
 
     private boolean indoor;
@@ -7,18 +9,9 @@ public class Cat extends Pet {
         this.indoor = indoor;
     }
 
-
+    @Override
     public void makeSound() {
         System.out.println("Cat " + name + " says: Meow!");
-    }
-
-
-    public String getType() {
-        return "Cat";
-    }
-
-    public boolean isIndoor() {
-        return indoor;
     }
 
     @Override
@@ -26,3 +19,4 @@ public class Cat extends Pet {
         return super.toString() + " | Indoor: " + (indoor ? "Yes" : "No");
     }
 }
+
