@@ -8,6 +8,15 @@ public abstract class Pet {
     protected int age;
     protected String ownerName;
 
+    // Constructor for INSERT (no ID)
+    public Pet(String name, String species, int age, String ownerName) {
+        setName(name);
+        setSpecies(species);
+        setAge(age);
+        setOwnerName(ownerName);
+    }
+
+    // Constructor for SELECT (with ID)
     public Pet(int petId, String name, String species, int age, String ownerName) {
         setPetId(petId);
         setName(name);
@@ -16,9 +25,7 @@ public abstract class Pet {
         setOwnerName(ownerName);
     }
 
-    public int getPetId() {
-        return petId;
-    }
+    // ----------- SETTERS -----------
 
     public void setPetId(int petId) {
         if (petId <= 0) {
@@ -50,16 +57,39 @@ public abstract class Pet {
 
     public void setOwnerName(String ownerName) {
         if (ownerName == null || ownerName.trim().isEmpty()) {
-            throw new IllegalArgumentException("model.Owner name cannot be empty");
+            throw new IllegalArgumentException("Owner name cannot be empty");
         }
         this.ownerName = ownerName;
     }
+
+    // ----------- GETTERS -----------
+
+    public int getPetId() {
+        return petId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSpecies() {
+        return species;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    // ----------- LOGIC -----------
 
     public boolean isYoung() {
         return age < 3;
     }
 
-    // ABSTRACT METHOD (ОБЯЗАТЕЛЬНО)
     public abstract void makeSound();
 
     @Override
@@ -68,9 +98,11 @@ public abstract class Pet {
                 ", Name: " + name +
                 ", Species: " + species +
                 ", Age: " + age +
-                ", model.Owner: " + ownerName;
+                ", Owner: " + ownerName;
     }
 }
+
+
 
 
 

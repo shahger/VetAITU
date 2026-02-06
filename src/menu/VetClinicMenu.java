@@ -1,99 +1,164 @@
 package menu;
 
-import model.*;
-import exception.*;
+import dao.PetDAO;
+import exception.InvalidInputException;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class VetClinicMenu implements Menu {
 
-    private ArrayList<Pet> pets = new ArrayList<>();
-    private Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
+    private final PetDAO petDAO;
 
     public VetClinicMenu() {
-        pets.add(new Dog(1, "Rex", 4, "Aidar", "Labrador"));
-        pets.add(new Cat(2, "Murka", 2, "Asel", true));
+        scanner = new Scanner(System.in);
+        petDAO = new PetDAO();
     }
 
     @Override
     public void displayMenu() {
         System.out.println("""
-        === VET CLINIC SYSTEM ===
+        ===== VET CLINIC SYSTEM =====
         1. Add Dog
         2. Add Cat
         3. View All Pets
-        4. Make All Pets Sound
+        4. Update Pet Name
+        5. Update Pet Age
+        6. Delete Pet
+        7. Search Pet by Name
+        8. Filter Pets by Species
+        9. Search Pets by Age Range
         0. Exit
+        =============================
         """);
     }
 
     @Override
     public void run() {
         boolean running = true;
+
         while (running) {
             displayMenu();
             try {
+                System.out.print("Choose option: ");
                 int choice = Integer.parseInt(scanner.nextLine());
+
                 switch (choice) {
                     case 1 -> addDog();
                     case 2 -> addCat();
-                    case 3 -> viewPets();
-                    case 4 -> makeSounds();
-                    case 0 -> running = false;
+                    case 3 -> petDAO.displayAllPets();
+                    case 4 -> updatePetName();
+                    case 5 -> updatePetAge();
+                    case 6 -> deletePet();
+                    case 7 -> searchByName();
+                    case 8 -> filterBySpecies();
+                    case 9 -> searchByAgeRange();
+                    case 0 -> {
+                        System.out.println("Exiting system...");
+                        running = false;
+                    }
                     default -> throw new InvalidInputException("Invalid menu option");
                 }
+
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
             }
         }
     }
 
+    // ---------- MENU ACTIONS ----------
+
     private void addDog() {
         try {
-            System.out.print("ID: ");
-            int id = Integer.parseInt(scanner.nextLine());
             System.out.print("Name: ");
             String name = scanner.nextLine();
+
             System.out.print("Age: ");
             int age = Integer.parseInt(scanner.nextLine());
-            System.out.print("model.Owner: ");
+
+            System.out.print("Owner name: ");
             String owner = scanner.nextLine();
+
             System.out.print("Breed: ");
             String breed = scanner.nextLine();
 
-            pets.add(new Dog(id, name, age, owner, breed));
-            System.out.println("Dog added!");
+            petDAO.insertDog(name, age, owner, breed);
+
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Failed to add dog");
         }
     }
 
     private void addCat() {
         try {
-            System.out.print("ID: ");
-            int id = Integer.parseInt(scanner.nextLine());
             System.out.print("Name: ");
             String name = scanner.nextLine();
+
             System.out.print("Age: ");
             int age = Integer.parseInt(scanner.nextLine());
-            System.out.print("model.Owner: ");
+
+            System.out.print("Owner name: ");
             String owner = scanner.nextLine();
+
             System.out.print("Indoor (true/false): ");
             boolean indoor = Boolean.parseBoolean(scanner.nextLine());
 
-            pets.add(new Cat(id, name, age, owner, indoor));
-            System.out.println("Cat added!");
+            petDAO.insertCat(name, age, owner, indoor);
+
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Failed to add cat");
         }
     }
 
-    private void viewPets() {
-        pets.forEach(System.out::println);
+    private void updatePetName() {
+        System.out.print("Pet ID: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("New name: ");
+        String name = scanner.nextLine();
+
+        petDAO.updatePetName(id, name);
     }
 
-    private void makeSounds() {
-        pets.forEach(Pet::makeSound);
+    private void updatePetAge() {
+        System.out.print("Pet ID: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("New age: ");
+        int age = Integer.parseInt(scanner.nextLine());
+
+        petDAO.updatePetAge(id, age);
+    }
+
+    private void deletePet() {
+        System.out.print("Pet ID to delete: ");
+        int id = Integer.parseInt(scanner.nextLine());
+
+        petDAO.deletePet(id);
+    }
+
+    private void searchByName() {
+        System.out.print("Enter name: ");
+        String name = scanner.nextLine();
+
+        petDAO.searchByName(name);
+    }
+
+    private void filterBySpecies() {
+        System.out.print("Species (Dog/Cat): ");
+        String species = scanner.nextLine();
+
+        petDAO.filterBySpecies(species);
+    }
+
+    private void searchByAgeRange() {
+        System.out.print("Min age: ");
+        int min = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Max age: ");
+        int max = Integer.parseInt(scanner.nextLine());
+
+        petDAO.searchByAgeRange(min, max);
     }
 }
+

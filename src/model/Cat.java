@@ -4,9 +4,22 @@ public class Cat extends Pet {
 
     private boolean indoor;
 
+    // Constructor for INSERT
+    public Cat(String name, int age, String ownerName, boolean indoor) {
+        super(name, "Cat", age, ownerName);
+        this.indoor = indoor;
+    }
+
+    // Constructor for SELECT
     public Cat(int id, String name, int age, String ownerName, boolean indoor) {
         super(id, name, "Cat", age, ownerName);
         this.indoor = indoor;
+    }
+
+    // ----------- GETTER -----------
+
+    public boolean isIndoor() {
+        return indoor;
     }
 
     @Override

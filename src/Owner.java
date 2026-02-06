@@ -1,5 +1,3 @@
-package model;
-
 public class Owner {
 
     private int ownerId;
@@ -50,7 +48,7 @@ public class Owner {
 
     @Override
     public String toString() {
-        return "model.Owner ID: " + ownerId +
+        return "Owner ID: " + ownerId +
                 ", Name: " + name +
                 ", Phone: " + phone +
                 ", Pets: " + numberOfPets;
